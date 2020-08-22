@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/talos-systems/os-engine/api/types";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+
+service Sink { rpc Events(stream Event) returns (google.protobuf.Empty); }
+
+message Error {
+  int32 code = 1;
+  string domain = 2;
+  string source = 3;
+  string message = 4;
+}
+
+message Event {
+  google.protobuf.Any data = 1;
+  string id = 2;
+}
+
+message Blockdevice {
+  string name = 1;
+  int32 major = 2;
+  int32 minor = 3;
+  string operation = 4;
+}
+
+message IO {
+  string command = 1;
+  uint32 pid = 2;
+  string disk = 3;
+  string operation = 4;
+}
